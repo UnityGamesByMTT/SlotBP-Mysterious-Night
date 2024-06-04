@@ -195,4 +195,5 @@ MonoBehaviour:
   delayBetweenLoop: 0
   StartOnAwake: 0
   DestroyOnCompletion: 0
+  isplaying: 0
   OriginalSprite: {fileID: 0}
