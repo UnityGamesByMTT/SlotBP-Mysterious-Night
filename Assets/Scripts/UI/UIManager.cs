@@ -26,18 +26,27 @@ public class UIManager : MonoBehaviour
     private Button PaytableExit_Button;
     [SerializeField]
     private Image Info_Image;
+    [SerializeField]
+    private TMP_Text[] SymbolsText;
 
-    [Header("Card Bonus Game")]
+    [Header("Win Popup")]
     [SerializeField]
-    private Button DoubleBet_Button;
+    private GameObject WinPopup_Object;
     [SerializeField]
-    private GameObject BonusPanel;
+    private TMP_Text Win_Text;
+    [Header("Win Popup")]
     [SerializeField]
-    private GameObject CardGame_Panel;
+    private Sprite MegaWin_Sprite;
     [SerializeField]
-    private GameObject CoffinGame_Panel;
+    private Image Win_Image;
 
     [SerializeField] private AudioController audioController;
+    [SerializeField]
+    private SlotBehaviour slotManager;
+
+    [SerializeField]
+    private Button GameExit_Button;
+
 
 
     private void Start()
@@ -48,24 +57,69 @@ public class UIManager : MonoBehaviour
         if (Info_Button) Info_Button.onClick.RemoveAllListeners();
         if (Info_Button) Info_Button.onClick.AddListener(delegate { OpenPopup(PaytablePopup_Object); });
 
-        if (DoubleBet_Button) DoubleBet_Button.onClick.RemoveAllListeners();
-        if (DoubleBet_Button) DoubleBet_Button.onClick.AddListener(delegate { OpenBonusGame(true); });
+        if (GameExit_Button) GameExit_Button.onClick.RemoveAllListeners();
+        if (GameExit_Button) GameExit_Button.onClick.AddListener(CallOnExitFunction);
+
+
     }
 
-    private void OpenBonusGame(bool type)
+    internal void PopulateWin(int value, double amount)
     {
-        if (audioController) audioController.PlayButtonAudio();
-        if (type)
+        switch (value)
         {
-            if (CardGame_Panel) CardGame_Panel.SetActive(true);
-            if (CoffinGame_Panel) CoffinGame_Panel.SetActive(false);
+            case 1:
+                if (Win_Image) Win_Image.sprite = MegaWin_Sprite;
+                break;
+            
         }
-        else
+
+        StartPopupAnim(amount);
+    }
+
+    internal void PopulateWin(double amount)
+    {
+        int initAmount = 0;
+        if (WinPopup_Object) WinPopup_Object.SetActive(true);
+        if (MainPopup_Object) MainPopup_Object.SetActive(true);
+
+        DOTween.To(() => initAmount, (val) => initAmount = val, (int)amount, 5f).OnUpdate(() =>
         {
-            if (CardGame_Panel) CardGame_Panel.SetActive(false);
-            if (CoffinGame_Panel) CoffinGame_Panel.SetActive(true);
-        }
-        if (BonusPanel) BonusPanel.SetActive(true);
+            if (Win_Text) Win_Text.text = initAmount.ToString();
+        });
+
+        DOVirtual.DelayedCall(6f, () =>
+        {
+            if (WinPopup_Object) WinPopup_Object.SetActive(false);
+            if (MainPopup_Object) MainPopup_Object.SetActive(false);
+        });
+    }
+
+   
+
+    private void StartPopupAnim(double amount)
+    {
+        int initAmount = 0;
+        if (WinPopup_Object) WinPopup_Object.SetActive(true);
+        if (MainPopup_Object) MainPopup_Object.SetActive(true);
+
+        DOTween.To(() => initAmount, (val) => initAmount = val, (int)amount, 5f).OnUpdate(() =>
+        {
+            if (Win_Text) Win_Text.text = initAmount.ToString();
+        });
+
+        DOVirtual.DelayedCall(6f, () =>
+        {
+            if (WinPopup_Object) WinPopup_Object.SetActive(false);
+            if (MainPopup_Object) MainPopup_Object.SetActive(false);
+            slotManager.CheckBonusGame();
+        });
+    }
+
+    
+    private void CallOnExitFunction()
+    {
+        slotManager.CallCloseSocket();
+        Application.ExternalCall("window.parent.postMessage", "onExit", "*");
     }
 
     private void OpenPopup(GameObject Popup)
@@ -83,4 +137,40 @@ public class UIManager : MonoBehaviour
         if (Popup) Popup.SetActive(false);
         if (MainPopup_Object) MainPopup_Object.SetActive(false);
     }
+
+    internal void InitialiseUIData(string SupportUrl, string AbtImgUrl, string TermsUrl, string PrivacyUrl, Paylines symbolsText)
+    {
+        PopulateSymbolsPayout(symbolsText);
+    }
+
+
+    private void PopulateSymbolsPayout(Paylines paylines)
+    {
+        for (int i = 0; i < paylines.symbols.Count; i++)
+        {
+            if (i < SymbolsText.Length)
+            {
+                string text = null;
+                if (paylines.symbols[i].multiplier._5x != 0)
+                {
+                    text += paylines.symbols[i].multiplier._5x;
+                }
+                if (paylines.symbols[i].multiplier._4x != 0)
+                {
+                    text += "\n" + paylines.symbols[i].multiplier._4x;
+                }
+                if (paylines.symbols[i].multiplier._3x != 0)
+                {
+                    text += "\n" + paylines.symbols[i].multiplier._3x;
+                }
+                if (paylines.symbols[i].multiplier._2x != 0)
+                {
+                    text += "\n" + paylines.symbols[i].multiplier._2x;
+                }
+                if (SymbolsText[i]) SymbolsText[i].text = text;
+            }
+        }
+    }
+
+    
 }

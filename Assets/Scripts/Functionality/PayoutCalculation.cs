@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 public class PayoutCalculation : MonoBehaviour
@@ -14,19 +15,62 @@ public class PayoutCalculation : MonoBehaviour
     private Transform LineContainer;
     [SerializeField]
     private GameObject[] Lines_Object;
+    internal int currrentLineIndex;
+    internal int currentLineIndex;
+    [SerializeField] internal List<int> LineList;
+    internal List<int> DontDestroy = new List<int>();
+
+    [SerializeField] private Button[] left_buttons;
+    [SerializeField] private Button[] right_buttons;
 
     [SerializeField]
     private Vector2 InitialLinePosition = new Vector2(-315, 100);
-
+    [SerializeField] internal List<int> DontDestroyLines = new List<int>();
     GameObject TempObj = null;
 
-    internal void GeneratePayoutLinesBackend(int lineIndex, bool isStatic = false)
+    internal void GeneratePayoutLinesBackend(int index = -1, bool DestroyFirst = true)
     {
-        if (Lines_Object[lineIndex]) Lines_Object[lineIndex].SetActive(true);
 
-        if(isStatic)
+        if (DestroyFirst)
+            ResetStaticLine();
+
+        if (index >= 0)
         {
-            TempObj = Lines_Object[lineIndex];
+            Lines_Object[index].SetActive(true);
+            print("line object name" + Lines_Object[index].name);
+            return;
+        }
+        DontDestroyLines.Clear();
+        for (int i = 0; i < LineList[currentLineIndex]; i++)
+        {
+            Lines_Object[i].SetActive(true);
+
+
+        }
+
+
+    }
+
+
+
+    internal void SetButtonActive(int LineCounter)
+    {
+
+        
+        currrentLineIndex = LineCounter;
+
+        for (int i = 0; i < LineCounter; i++)
+        {
+            Lines_Object[i].SetActive(true);
+            left_buttons[i].interactable = true;
+            right_buttons[i].interactable = true;
+        }
+
+
+        for (int j = LineCounter; j < left_buttons.Length; j++)
+        {
+            left_buttons[j].interactable = false;
+            right_buttons[j].interactable = false;
         }
     }
 
