@@ -429,7 +429,6 @@ public class SlotBehaviour : MonoBehaviour
 
     private void StartSlots(bool autoSpin = false)
     {
-        if (audioController) audioController.PlayButtonAudio("spin");
 
         if (!autoSpin)
         {
@@ -441,6 +440,7 @@ public class SlotBehaviour : MonoBehaviour
                 AutoSpinRoutine = null;
             }
         }
+        if (audioController) audioController.PlayButtonAudio("spin");
 
         if (SlotStart_Button) SlotStart_Button.interactable = false;
         if (TempList.Count > 0)
@@ -457,6 +457,11 @@ public class SlotBehaviour : MonoBehaviour
         if (currentBalance < currentTotalBet)
         {
             CompareBalance();
+            if (IsAutoSpin) {
+
+                StopAutoSpin();
+                yield return new WaitForSeconds(1);
+            }
             yield break;
         }
 
@@ -563,7 +568,7 @@ public class SlotBehaviour : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(2f);
             IsSpinning = false;
         }
 
@@ -642,7 +647,6 @@ public class SlotBehaviour : MonoBehaviour
         if (LineId.Count > 0)
         {
             if (audioController) audioController.PlayWLAudio("win");
-
 
             for (int i = 0; i < LineId.Count; i++)
             {

@@ -4328,7 +4328,6 @@ MonoBehaviour:
   - {fileID: 1662736802}
   - {fileID: 872304548}
   - {fileID: 2058722023}
-  - {fileID: 555094746}
   Info_Button: {fileID: 428522460}
   WinPopup_Object: {fileID: 1975857608}
   Win_Text: {fileID: 1356816186}
@@ -5784,7 +5783,7 @@ MonoBehaviour:
   uIManager: {fileID: 0}
   bonusdata: []
   _jsManager: {fileID: 500036493}
-  testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGU3ODRkYWNmNmNiYjRmMjAzOTNmMiIsInVzZXJuYW1lIjoicml0aWsiLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzIxNzEwMDQzLCJleHAiOjE3MjE3OTY0NDN9.CwWXM48SbwKvZ8YBK4uczy8IrhN0XQfazpUKW12CmmM
+  testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTBhNmJkYzVjODcyYjE2YzM2ZjFkZCIsInVzZXJuYW1lIjoic2F5YW4iLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzIxOTA5MTg0LCJleHAiOjE3MjE5OTU1ODR9.H-WVZNAYPOcH4IX3KBoX2lOhiV8QMOteuoDz9DNbjrE
 --- !u!114 &500036493
 MonoBehaviour:
   m_ObjectHideFlags: 0
