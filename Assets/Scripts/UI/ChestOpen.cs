@@ -13,6 +13,7 @@ public class ChestOpen : MonoBehaviour
     private GameObject Chest_Opening;
     [SerializeField] private ImageAnimation imageAnimation;
     [SerializeField] private BonusController _bonusManager;
+    [SerializeField] private AudioController audioController;
 
     [SerializeField]
     internal bool isOpen;
@@ -30,7 +31,7 @@ public class ChestOpen : MonoBehaviour
 
     //[SerializeField]
     private SlotBehaviour slotManager;
-
+    private int value;
     void Start()
     {
         if (Chest) Chest.onClick.RemoveAllListeners();
@@ -44,12 +45,16 @@ public class ChestOpen : MonoBehaviour
     {
         isOpen = false;
         text.gameObject.SetActive(false);
+        Chest_Opening.SetActive(false);
+        Chest.gameObject.SetActive(true);
+        imageAnimation.StopAnimation();
     }
 
     void OpenCase()
     {
-        if (isOpen)
-            return;
+        if (isOpen) return;
+        if (_bonusManager.isOpening) return;
+        if (_bonusManager.isFinisdhed) return;
         PopulateCase();
         Chest_Opening.SetActive(true);
         Chest.gameObject.SetActive(false);
@@ -58,28 +63,38 @@ public class ChestOpen : MonoBehaviour
 
     void PopulateCase()
     {
-        int value = _bonusManager.GetValue();
-        if (value == -1)
+        value = _bonusManager.GetValue();
+        print("value " + value);
+        if (value == 0)
         {
-            text.text = "game over";
+            text.text = "Game Over";
         }
         else
         {
-            text.text = value.ToString();
+            text.text = (value * _bonusManager.bet).ToString();
         }
     }
 
     IEnumerator setCase()
     {
+        _bonusManager.isOpening = true;
+        audioController.PlaySpinBonusAudio("bonus");
         yield return new WaitUntil(() => !imageAnimation.isplaying);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.7f);
+        audioController.StopApinBonusAudio();
         text.gameObject.SetActive(true);
         isOpen = true;
-        if (text.text == "game over")
+
+        _bonusManager.totalWin += value;
+        if (value == 0)
+            _bonusManager.isFinisdhed = true;
+
+        if (text.text == "Game Over")
         {
             yield return new WaitForSeconds(1f);
             _bonusManager.GameOver();
         }
+        _bonusManager.isOpening = false;
     }
 
     private void StartFreeSpins(int spins)

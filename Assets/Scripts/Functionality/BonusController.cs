@@ -19,11 +19,18 @@ public class BonusController : MonoBehaviour
     [SerializeField]
     private List<int> CaseValues;
 
+    [SerializeField] private GameObject BonusWin;
+    [SerializeField] private Transform BonusWinObject;
+    [SerializeField] private TMP_Text win_text;
+
+
     int index = 0;
+    internal bool isOpening;
+    internal bool isFinisdhed;
+    internal double bet { get; private set; }
+    internal double totalWin;
 
-
-
-    internal void ChestOpen(List<int> values)
+    internal void ChestOpen(List<int> values,double betAmount)
     {
         index = 0;
         CaseValues.Clear();
@@ -35,21 +42,48 @@ public class BonusController : MonoBehaviour
             cases.ResetCase();
         }
 
-        for (int i = 0; i < CaseValues.Count; i++)
-        {
-            if (CaseValues[i] == -1)
-            {
-                CaseValues.RemoveAt(i);
-                CaseValues.Add(-1);
-            }
-        }
+        //for (int i = 0; i < CaseValues.Count; i++)
+        //{
+        //    if (CaseValues[i] == 0)
+        //    {
+        //        CaseValues.RemoveAt(i);
+        //        CaseValues.Add(0);
+        //    }
+        //}
+        bet = betAmount;
         StartBonus();
     }
 
     internal void GameOver()
     {
-        slotManager.CheckPopups = false;
-        if (Bonus_Object) Bonus_Object.SetActive(false);
+        win_text.text = totalWin.ToString();
+
+        BonusWinObject.localScale = Vector3.zero;
+        BonusWin.SetActive(true);
+        BonusWinObject.DOScale(Vector3.one, 0.3f);
+        if (totalWin > 0)
+            _audioManager.PlayWLAudio("bonuswin");
+        else
+        {
+            _audioManager.PlayWLAudio("bonuslose");
+
+
+        }
+        DOVirtual.DelayedCall(2f, () =>
+        {
+            slotManager.CheckPopups = false;
+            isFinisdhed = false;
+            bet = 0;
+            if (Bonus_Object) Bonus_Object.SetActive(false);
+            BonusWin.SetActive(false);
+            win_text.text = "";
+            totalWin = 0;
+        });
+
+
+
+
+
     }
 
     internal int GetValue()

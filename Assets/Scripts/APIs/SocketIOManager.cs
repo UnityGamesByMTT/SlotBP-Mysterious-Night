@@ -10,11 +10,15 @@ using System.Linq;
 using Newtonsoft.Json;
 using Best.SocketIO;
 using Best.SocketIO.Events;
+using Newtonsoft.Json.Linq;
+using System.Runtime.Serialization;
+
 
 public class SocketIOManager : MonoBehaviour
 {
     [SerializeField]
     private SlotBehaviour slotManager;
+    [SerializeField] private UIManager uIManager;
 
     internal GameData initialData = null;
     internal UIData initUIData = null;
@@ -29,8 +33,10 @@ public class SocketIOManager : MonoBehaviour
     [SerializeField]
     internal JSHandler _jsManager;
 
-    [SerializeField]
-    private string SocketURI;
+    //[SerializeField]
+    //private string SocketURI;
+
+    protected string SocketURI = "https://dev.casinoparadize.com";
 
     [SerializeField]
     private string testToken;
@@ -38,6 +44,9 @@ public class SocketIOManager : MonoBehaviour
     internal bool isResultdone = false;
 
     protected string gameID = "SL-MYN";
+
+    internal bool isLoading=true;
+
 
     private void Start()
     {
@@ -129,6 +138,28 @@ public class SocketIOManager : MonoBehaviour
         SetupSocketManager(options);
     }
 
+
+    private void OnSocketState(bool state)
+    {
+        if (state)
+        {
+            Debug.Log("my state is " + state);
+            InitRequest("AUTH");
+        }
+        else
+        {
+
+        }
+    }
+    private void OnSocketError(string data)
+    {
+        Debug.Log("Received error with data: " + data);
+    }
+    private void OnSocketAlert(string data)
+    {
+        Debug.Log("Received alert with data: " + data);
+    }
+
     private void SetupSocketManager(SocketOptions options)
     {
         // Create and setup SocketManager
@@ -139,6 +170,10 @@ public class SocketIOManager : MonoBehaviour
         this.manager.Socket.On<string>(SocketIOEventTypes.Disconnect, OnDisconnected);
         this.manager.Socket.On<string>(SocketIOEventTypes.Error, OnError);
         this.manager.Socket.On<string>("message", OnListenEvent);
+        this.manager.Socket.On<bool>("socketState", OnSocketState);
+        this.manager.Socket.On<string>("internalError", OnSocketError);
+        this.manager.Socket.On<string>("alert", OnSocketAlert);
+
 
         // Start connecting to the server
         this.manager.Open();
@@ -148,12 +183,13 @@ public class SocketIOManager : MonoBehaviour
     void OnConnected(ConnectResponse resp)
     {
         Debug.Log("Connected!");
-        InitRequest("AUTH");
+        //InitRequest("AUTH");
     }
 
     private void OnDisconnected(string response)
     {
         Debug.Log("Disconnected from the server");
+        uIManager.DisconnectionPopup(false);
     }
 
     private void OnError(string response)
@@ -252,7 +288,7 @@ public class SocketIOManager : MonoBehaviour
         }
 
         slotManager.SetInitialUI();
-
+        isLoading = false;
         Application.ExternalCall("window.parent.postMessage", "OnEnter", "*");
     }
 
@@ -396,7 +432,8 @@ public class SocketIOManager : MonoBehaviour
 public class BetData
 {
     public double currentBet;
-    //public double TotalLines;
+    public double currentLines=9;
+    public double spins=1;
 }
 
 [Serializable]
@@ -439,7 +476,8 @@ public class AbtLogo
 public class GameData
 {
     public List<List<string>> Reel { get; set; }
-    public List<int> Bets { get; set; }
+    public List<List<int>> Lines { get; set; }
+    public List<double> Bets { get; set; }
     public bool canSwitchLines { get; set; }
     public List<int> LinesCount { get; set; }
     public List<int> autoSpin { get; set; }
@@ -498,24 +536,36 @@ public class Paylines
 [Serializable]
 public class Symbol
 {
-    public Multiplier multiplier { get; set; }
+    public int ID { get; set; }
+    public string Name { get; set; }
+    [JsonProperty("multiplier")]
+    public object MultiplierObject { get; set; }
+
+    // This property will hold the properly deserialized list of lists of integers
+    [JsonIgnore]
+    public List<List<int>> Multiplier { get; private set; }
+
+    // Custom deserialization method to handle the conversion
+    [OnDeserialized]
+    internal void OnDeserializedMethod(StreamingContext context)
+    {
+        // Handle the case where multiplier is an object (empty in JSON)
+        if (MultiplierObject is JObject)
+        {
+            Multiplier = new List<List<int>>();
+        }
+        else
+        {
+            // Deserialize normally assuming it's an array of arrays
+            Multiplier = JsonConvert.DeserializeObject<List<List<int>>>(MultiplierObject.ToString());
+        }
+    }
+    public object defaultAmount { get; set; }
+    public object symbolsCount { get; set; }
+    public object increaseValue { get; set; }
+    public int freeSpin { get; set; }
 }
 
-[Serializable]
-public class Multiplier
-{
-    [JsonProperty("5x")]
-    public double _5x { get; set; }
-
-    [JsonProperty("4x")]
-    public double _4x { get; set; }
-
-    [JsonProperty("3x")]
-    public double _3x { get; set; }
-
-    [JsonProperty("2x")]
-    public double _2x { get; set; }
-}
 
 [Serializable]
 public class PlayerData
