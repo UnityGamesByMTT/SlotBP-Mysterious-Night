@@ -49,7 +49,7 @@ public class SocketIOManager : MonoBehaviour
 
     protected string gameID = "SL-MYN";
 
-    internal bool isLoading=true;
+    internal bool isLoading = true;
 
 
     private void Start()
@@ -230,9 +230,31 @@ public class SocketIOManager : MonoBehaviour
 
     internal void CloseWebSocket()
     {
-        if (this.manager != null)
+        CloseSocketMesssage("EXIT");
+
+        DOVirtual.DelayedCall(0.1f, () =>
         {
-            this.manager.Close();
+            if (this.manager != null)
+            {
+                Debug.Log("Dispose my Socket");
+                this.manager.Close();
+            }
+        });
+
+    }
+
+    private void CloseSocketMesssage(string eventName)
+    {
+        // Construct message data
+
+        if (this.manager.Socket != null && this.manager.Socket.IsOpen)
+        {
+            this.manager.Socket.Emit(eventName);
+            //Debug.Log("JSON data sent: " + json);
+        }
+        else
+        {
+            Debug.LogWarning("Socket is not connected.");
         }
     }
 
@@ -276,7 +298,7 @@ public class SocketIOManager : MonoBehaviour
             //         isResultdone = true;
             //         break;
             //     }
-                        // case "GambleResult":
+            // case "GambleResult":
             //     {
             //         Debug.Log(jsonObject);
             //         gambleData = myData.message.GambleData;
@@ -478,8 +500,8 @@ public class LowCard
 public class BetData
 {
     public double currentBet;
-    public double currentLines=9;
-    public double spins=1;
+    public double currentLines = 9;
+    public double spins = 1;
 }
 
 [Serializable]
