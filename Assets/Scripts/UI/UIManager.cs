@@ -74,6 +74,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider MusicSlider;
     [SerializeField] private Slider SoundSlider;
 
+    [Header("AnotherDevice Popup")]
+    [SerializeField] private Button CloseAD_Button;
+    [SerializeField] private GameObject ADPopup_Object;
+
     private bool isOpen;
 
     private bool isExit = false;
@@ -122,6 +126,9 @@ public class UIManager : MonoBehaviour
 
         if (SoundSlider) SoundSlider.onValueChanged.AddListener(delegate { ToggleSound(); });
         if (MusicSlider) MusicSlider.onValueChanged.AddListener(delegate { ToggleMusic(); });
+
+        if (CloseAD_Button) CloseAD_Button.onClick.RemoveAllListeners();
+        if (CloseAD_Button) CloseAD_Button.onClick.AddListener(CallOnExitFunction);
 
     }
 
@@ -250,7 +257,10 @@ public class UIManager : MonoBehaviour
         }
 
     }
-
+    internal void ADfunction()
+    {
+        OpenPopup(ADPopup_Object); 
+    }
     private void CallOnExitFunction()
     {
         isExit = true;

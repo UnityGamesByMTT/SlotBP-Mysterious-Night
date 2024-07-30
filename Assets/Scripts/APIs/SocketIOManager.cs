@@ -155,6 +155,12 @@ public class SocketIOManager : MonoBehaviour
 
         }
     }
+
+    private void OnSocketOtherDevice(string data)
+    {
+        Debug.Log("Received Device Error with data: " + data);
+        uIManager.ADfunction();
+    }
     private void OnSocketError(string data)
     {
         Debug.Log("Received error with data: " + data);
@@ -162,6 +168,22 @@ public class SocketIOManager : MonoBehaviour
     private void OnSocketAlert(string data)
     {
         Debug.Log("Received alert with data: " + data);
+        AliveRequest("YES I AM ALIVE");
+
+    }
+
+    private void AliveRequest(string eventName)
+    {
+        InitData message = new InitData();
+        if (this.manager.Socket != null && this.manager.Socket.IsOpen)
+        {
+            this.manager.Socket.Emit(eventName);
+            Debug.Log("JSON data sent: alive");
+        }
+        else
+        {
+            Debug.LogWarning("Socket is not connected.");
+        }
     }
 
     private void SetupSocketManager(SocketOptions options)
@@ -177,6 +199,7 @@ public class SocketIOManager : MonoBehaviour
         this.manager.Socket.On<bool>("socketState", OnSocketState);
         this.manager.Socket.On<string>("internalError", OnSocketError);
         this.manager.Socket.On<string>("alert", OnSocketAlert);
+        this.manager.Socket.On<string>("AnotherDevice", OnSocketOtherDevice);
 
 
         // Start connecting to the server
