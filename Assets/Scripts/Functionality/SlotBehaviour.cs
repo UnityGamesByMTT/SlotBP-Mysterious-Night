@@ -374,6 +374,8 @@ public class SlotBehaviour : MonoBehaviour
     {
         animScript.textureArray.Clear();
         animScript.textureArray.TrimExcess();
+        animScript.AnimationSpeed=30;
+
         switch (val)
         {
             case 0:
@@ -422,6 +424,7 @@ public class SlotBehaviour : MonoBehaviour
                 for (int i = 0; i < Symbol8.Length; i++)
                 {
                     animScript.textureArray.Add(Symbol8[i]);
+                    animScript.AnimationSpeed=18;
                 }
                 break;
         }
