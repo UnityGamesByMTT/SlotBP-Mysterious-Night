@@ -6158,7 +6158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotManager: {fileID: 2046803210}
-  uIManager: {fileID: 0}
+  uIManager: {fileID: 377874625}
   bonusdata: []
   _jsManager: {fileID: 500036493}
   testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTM0NzUxZDRlOGJiMDFjNTNjMGVlNyIsInVzZXJuYW1lIjoic2F5YW4iLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzIyMjMxMzkxLCJleHAiOjE3MjI4MzYxOTF9.-KKnRGSZVI4ADSmt8jTIWqZwOPtILwgsc5ek4JLK-yk
