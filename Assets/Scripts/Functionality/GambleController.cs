@@ -279,6 +279,10 @@ public class GambleController : MonoBehaviour
         DealerCard_Script.Card_Button.image.sprite = cardCover;
         DealerCard_Script.once = false;
         toggleDoubleButton(false);
+        for (int i = 0; i < progressbar.childCount; i++)
+        {
+            progressbar.GetChild(i).gameObject.SetActive(false);
+        }
 
     }
 
