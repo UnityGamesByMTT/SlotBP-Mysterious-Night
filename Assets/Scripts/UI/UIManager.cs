@@ -197,7 +197,8 @@ public class UIManager : MonoBehaviour
 
 
 
-    void OnMenuClick() {
+    void OnMenuClick()
+    {
 
         if (audioController) audioController.PlayButtonAudio();
         isOpen = !isOpen;
@@ -240,8 +241,16 @@ public class UIManager : MonoBehaviour
 
         DOVirtual.DelayedCall(6f, () =>
         {
-            if (WinPopup_Object) WinPopup_Object.SetActive(false);
-            if (MainPopup_Object) MainPopup_Object.SetActive(false);
+            ClosePopup(WinPopup_Object);
+            Win_Text.text="";
+            // if (WinPopup_Object) WinPopup_Object.SetActive(false);
+
+            // if (!disconnecitonPopUp_object.activeSelf)
+            // {
+            //     if (MainPopup_Object) MainPopup_Object.SetActive(false);
+            // }
+
+            // if (MainPopup_Object) MainPopup_Object.SetActive(false);
             slotManager.CheckPopups = false;
             //slotManager.CheckBonusGame();
         });
@@ -259,7 +268,7 @@ public class UIManager : MonoBehaviour
     }
     internal void ADfunction()
     {
-        OpenPopup(ADPopup_Object); 
+        OpenPopup(ADPopup_Object);
     }
     private void CallOnExitFunction()
     {
@@ -281,7 +290,10 @@ public class UIManager : MonoBehaviour
         if (audioController) audioController.PlayButtonAudio();
 
         if (Popup) Popup.SetActive(false);
-        if (MainPopup_Object) MainPopup_Object.SetActive(false);
+        if (!disconnecitonPopUp_object.activeSelf) 
+        {
+            if (MainPopup_Object) MainPopup_Object.SetActive(false);
+        }
     }
 
     internal void InitialiseUIData(string SupportUrl, string AbtImgUrl, string TermsUrl, string PrivacyUrl, Paylines symbolsText)
@@ -297,7 +309,7 @@ public class UIManager : MonoBehaviour
             string text = null;
             if (paylines.symbols[i].Multiplier[0][0] != 0)
             {
-                text +=  paylines.symbols[i].Multiplier[0][0];
+                text += paylines.symbols[i].Multiplier[0][0];
             }
             if (paylines.symbols[i].Multiplier[1][0] != 0)
             {
