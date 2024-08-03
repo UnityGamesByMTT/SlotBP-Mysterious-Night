@@ -243,7 +243,7 @@ public class SlotBehaviour : MonoBehaviour
         {
             StartSlots(IsAutoSpin);
             yield return tweenroutine;
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
         }
     }
@@ -615,9 +615,11 @@ public class SlotBehaviour : MonoBehaviour
     void ToggleButtonGrp(bool toggle)
     {
         if (SlotStart_Button) SlotStart_Button.interactable = toggle;
-        if (LinePlus_Button) LinePlus_Button.interactable = toggle;
-        if (LineMinus_Button) LineMinus_Button.interactable = toggle;
+        // if (LinePlus_Button) LinePlus_Button.interactable = toggle;
+        // if (LineMinus_Button) LineMinus_Button.interactable = toggle;
         if (_buttonBetone) _buttonBetone.interactable = toggle;
+        if(BetPlus) BetPlus.interactable=toggle;
+        if(BetMinus) BetMinus.interactable=toggle;
         if (MaxBet_Button) MaxBet_Button.interactable = toggle;
         if (AutoSpin_Button) AutoSpin_Button.interactable = toggle;
     }
