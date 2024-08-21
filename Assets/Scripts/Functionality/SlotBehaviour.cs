@@ -783,7 +783,10 @@ public class SlotBehaviour : MonoBehaviour
 
     }
     #endregion
-
+    internal void GambleCollect()
+    {
+        SocketManager.GambleCollectCall();
+    }
 }
 
 [Serializable]
