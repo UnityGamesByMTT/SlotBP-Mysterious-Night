@@ -31,7 +31,12 @@ public class UIManager : MonoBehaviour
     private Image Info_Image;
     [SerializeField]
     private TMP_Text[] SymbolsText;
-    [SerializeField] private Button Info_Button;
+    [SerializeField]
+    private TMP_Text m_Wild_Text;
+    [SerializeField]
+    private TMP_Text m_Bonus_Text;
+    [SerializeField]
+    private Button Info_Button;
 
     [Header("Win Popup")]
     [SerializeField] private GameObject WinPopup_Object;
@@ -322,7 +327,17 @@ public class UIManager : MonoBehaviour
             if (SymbolsText[i]) SymbolsText[i].text = text;
         }
 
-
+        for (int i = 0; i < paylines.symbols.Count; i++)
+        {
+            if (paylines.symbols[i].Name.ToUpper() == "WILD")
+            {
+                if (m_Wild_Text) m_Wild_Text.text = paylines.symbols[i].description.ToString();
+            }
+            if (paylines.symbols[i].Name.ToUpper() == "BONUS")
+            {
+                if (m_Bonus_Text) m_Bonus_Text.text = paylines.symbols[i].description.ToString();
+            }
+        }
     }
 
 
