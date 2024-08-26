@@ -53,12 +53,15 @@ public class SocketIOManager : MonoBehaviour
     protected string gameID = "SL-MYN";
 
     internal bool isLoading = true;
+    internal bool SetInit = false;
 
 
     private void Start()
     {
+        SetInit = false;
         OpenSocket();
-        Debug.unityLogger.logEnabled = false;
+
+        //Debug.unityLogger.logEnabled = false;
     }
 
     void ReceiveAuthToken(string jsonData)
@@ -354,15 +357,23 @@ public class SocketIOManager : MonoBehaviour
         {
             case "InitData":
                 {
-                    Debug.Log(jsonObject);
                     initialData = myData.message.GameData;
                     initUIData = myData.message.UIData;
                     playerdata = myData.message.PlayerData;
                     bonusdata = myData.message.BonusData;
                     GambleLimit = myData.message.maxGambleBet;
-                    List<string> InitialReels = ConvertListOfListsToStrings(initialData.Reel);
-                    InitialReels = RemoveQuotes(InitialReels);
-                    PopulateSlotSocket(InitialReels);
+                    if (!SetInit)
+                    {
+                        Debug.Log(jsonObject);
+                        List<string> InitialReels = ConvertListOfListsToStrings(initialData.Reel);
+                        InitialReels = RemoveQuotes(InitialReels);
+                        PopulateSlotSocket(InitialReels);
+                        SetInit = true;
+                    }
+                    else
+                    {
+                        RefreshUI();
+                    }
                     break;
                 }
             case "ResultData":
@@ -408,6 +419,11 @@ public class SocketIOManager : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    private void RefreshUI()
+    {
+        uIManager.InitialiseUIData(initUIData.AbtLogo.link, initUIData.AbtLogo.logoSprite, initUIData.ToULink, initUIData.PopLink, initUIData.paylines);
     }
 
     private void PopulateSlotSocket(List<string> slotPop)
@@ -765,6 +781,7 @@ public class Symbol
     public object defaultAmount { get; set; }
     public object symbolsCount { get; set; }
     public object increaseValue { get; set; }
+    public object description { get; set; }
     public int freeSpin { get; set; }
 }
 
