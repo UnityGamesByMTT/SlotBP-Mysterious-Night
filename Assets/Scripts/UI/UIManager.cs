@@ -112,10 +112,10 @@ public class UIManager : MonoBehaviour
         if (GameExit_Button) GameExit_Button.onClick.AddListener(delegate { OpenPopup(QuitPopup_Object); });
 
         if (NoQuit_Button) NoQuit_Button.onClick.RemoveAllListeners();
-        if (NoQuit_Button) NoQuit_Button.onClick.AddListener(delegate { ClosePopup(QuitPopup_Object); });
+        if (NoQuit_Button) NoQuit_Button.onClick.AddListener(delegate { if(!isExit) ClosePopup(QuitPopup_Object); });
 
         if (CancelQuit_Button) CancelQuit_Button.onClick.RemoveAllListeners();
-        if (CancelQuit_Button) CancelQuit_Button.onClick.AddListener(delegate { ClosePopup(QuitPopup_Object); });
+        if (CancelQuit_Button) CancelQuit_Button.onClick.AddListener(delegate { if(!isExit) ClosePopup(QuitPopup_Object); });
 
         if (YesQuit_Button) YesQuit_Button.onClick.RemoveAllListeners();
         if (YesQuit_Button) YesQuit_Button.onClick.AddListener(CallOnExitFunction);
@@ -279,7 +279,7 @@ public class UIManager : MonoBehaviour
     {
         isExit = true;
         slotManager.CallCloseSocket();
-        Application.ExternalCall("window.parent.postMessage", "onExit", "*");
+        //Application.ExternalCall("window.parent.postMessage", "onExit", "*");
     }
 
     private void OpenPopup(GameObject Popup)
