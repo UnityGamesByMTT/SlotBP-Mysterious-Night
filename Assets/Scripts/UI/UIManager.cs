@@ -83,14 +83,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button CloseAD_Button;
     [SerializeField] private GameObject ADPopup_Object;
 
+    [SerializeField] private Button m_AwakeGameButton;
+
     private bool isOpen;
 
     private bool isExit = false;
 
+    //private void Awake()
+    //{
+    //    if (SplashScreen) SplashScreen.SetActive(true);
+    //    StartCoroutine(LoadingRoutine());
+    //}
+
     private void Awake()
     {
-        if (SplashScreen) SplashScreen.SetActive(true);
-        StartCoroutine(LoadingRoutine());
+        SimulateClickByDefault();
     }
 
     private void Start()
@@ -135,6 +142,15 @@ public class UIManager : MonoBehaviour
         if (CloseAD_Button) CloseAD_Button.onClick.RemoveAllListeners();
         if (CloseAD_Button) CloseAD_Button.onClick.AddListener(CallOnExitFunction);
 
+    }
+
+    //HACK: Something To Do Here
+    private void SimulateClickByDefault()
+    {
+
+        Debug.Log("Awaken The Game...");
+        m_AwakeGameButton.onClick.AddListener(() => { Debug.Log("Called The Game..."); });
+        m_AwakeGameButton.onClick.Invoke();
     }
 
     private void ToggleMusic()
