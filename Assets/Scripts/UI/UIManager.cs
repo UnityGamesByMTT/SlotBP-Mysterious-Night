@@ -212,7 +212,7 @@ public class UIManager : MonoBehaviour
             MenuButton.image.sprite = MenuOpenSprite;
             for (int i = 0; i < MenuGrp.childCount - 2; i++)
             {
-                MenuGrp.GetChild(i).DOLocalMoveY(-130 * (i + 1), 0.1f * (i + 1));
+                MenuGrp.GetChild(i).DOLocalMoveX(130 * (i + 1), 0.1f * (i + 1));
             }
         }
         else
@@ -221,7 +221,7 @@ public class UIManager : MonoBehaviour
 
             for (int i = 0; i < MenuGrp.childCount - 2; i++)
             {
-                MenuGrp.GetChild(i).DOLocalMoveY(0 * (i + 1), 0.1f * (i + 1));
+                MenuGrp.GetChild(i).DOLocalMoveX(0 * (i + 1), 0.1f * (i + 1));
 
             }
 
