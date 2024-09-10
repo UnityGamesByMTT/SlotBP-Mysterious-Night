@@ -38,9 +38,6 @@
 
 <body>
 
-    <iframe src="https://milkyway-el-dorado-loader-dev.vercel.app/" id="loading-screen" crossorigin="anonymous" frameborder="0">
-
-    </iframe>
   <canvas id="unity-canvas" tabindex="-1"></canvas>
   <script>
     const canvas=document.querySelector("#unity-canvas");
@@ -84,7 +81,7 @@
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Halloween",
-        productVersion: "0.0.86",
+        productVersion: "0.0.91",
       };
 
         
@@ -101,12 +98,15 @@
         document.body.appendChild(script);
         window.addEventListener('load', resizeCanvas());
   </script>
+     <script type="text/javascript">
+        console.log = function() {};
+        console.warn = function() {};
+        console.error = function() {};
+    </script>
+    <script>
+      window.focus();
+    </script>
 
-  <script type="text/javascript">
-    console.log = function() {};
-    console.warn = function() {};
-    console.error = function() {};
-  </script> 
 </body>
 
 </html>
