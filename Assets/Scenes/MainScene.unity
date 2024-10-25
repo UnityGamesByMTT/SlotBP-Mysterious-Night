@@ -4797,7 +4797,7 @@ MonoBehaviour:
   progressbar: {fileID: 1632182936}
   loading_text: {fileID: 1401193521}
   disconnecitonPopUp_object: {fileID: 107605718}
-  disconnection_close: {fileID: 954711929}
+  disconnection_close: {fileID: 1728182734}
   LBPopup_Object: {fileID: 779295839}
   LBExit_Button: {fileID: 954711929}
   QuitPopup_Object: {fileID: 12142593}
@@ -6385,7 +6385,7 @@ MonoBehaviour:
   uIManager: {fileID: 377874625}
   bonusdata: []
   _jsManager: {fileID: 500036493}
-  testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDgzZDdkYTI3YmY5MDI0NDNlYjRkZSIsInVzZXJuYW1lIjoiZGFyc2hhbiIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3MjU2ODY3NTIsImV4cCI6MTcyNjI5MTU1Mn0.Kr40gObOJzdUMb5K2uP0VrW2BJeNvqCGAcRJiGbMw7c
+  testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDgzZDdkYTI3YmY5MDI0NDNlYjRkZSIsInVzZXJuYW1lIjoiZGFyc2hhbiIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3Mjk4NDYyODAsImV4cCI6MTczMDQ1MTA4MH0.pa-MX_TtRkMSjYGYygQqO7NOreUVhH0IEiSW0n3A5W4
 --- !u!114 &500036493
 MonoBehaviour:
   m_ObjectHideFlags: 0
