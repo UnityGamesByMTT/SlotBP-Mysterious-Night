@@ -85,7 +85,7 @@ public class ChestOpen : MonoBehaviour
         text.gameObject.SetActive(true);
         isOpen = true;
 
-        _bonusManager.totalWin += value;
+        _bonusManager.totalWin += (value * _bonusManager.bet);
         if (value == 0)
             _bonusManager.isFinisdhed = true;
 
