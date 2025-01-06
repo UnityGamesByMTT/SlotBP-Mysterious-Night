@@ -41,8 +41,8 @@ public class SocketIOManager : MonoBehaviour
     //private string SocketURI;
 
     protected string SocketURI = null;
-    protected string TestSocketURI = "https://game-crm-rtp-backend.onrender.com/";
-    //protected string TestSocketURI = "http://localhost:5000";
+    //protected string TestSocketURI = "https://game-crm-rtp-backend.onrender.com/";
+    protected string TestSocketURI = "http://localhost:5000";
     private const int maxReconnectionAttempts = 6;
     private readonly TimeSpan reconnectionDelay = TimeSpan.FromSeconds(10);
 
@@ -52,6 +52,7 @@ public class SocketIOManager : MonoBehaviour
     internal bool isResultdone = false;
 
     protected string gameID = "SL-MYN";
+    //protected string gameID = "";
 
     internal bool isLoading = true;
     internal bool SetInit = false;

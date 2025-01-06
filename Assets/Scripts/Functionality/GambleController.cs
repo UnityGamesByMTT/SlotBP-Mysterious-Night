@@ -46,7 +46,7 @@ public class GambleController : MonoBehaviour
     private Tweener Gamble_Tween_Scale = null; // Tweener for scaling the double button
     internal double gambleAmount;
 
-    [SerializeField] private bool isAutoSpinOn;
+    [SerializeField] internal bool isAutoSpinOn;
 
     #region Initialization
 

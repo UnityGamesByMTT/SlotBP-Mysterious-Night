@@ -129,7 +129,8 @@ public class SlotBehaviour : MonoBehaviour
     private BonusController _bonusManager;
     [SerializeField]
     private UIManager uiManager;
-    [SerializeField] private GambleController gambleController;
+    [SerializeField]
+    private GambleController gambleController;
 
     private Coroutine AutoSpinRoutine = null;
     private Coroutine tweenroutine = null;
@@ -173,7 +174,7 @@ public class SlotBehaviour : MonoBehaviour
         if (AutoSpin_Button) AutoSpin_Button.onClick.AddListener(AutoSpin);
 
         if (AutoSpinStop_Button) AutoSpinStop_Button.onClick.RemoveAllListeners();
-        if (AutoSpinStop_Button) AutoSpinStop_Button.onClick.AddListener(StopAutoSpin);
+        if (AutoSpinStop_Button) AutoSpinStop_Button.onClick.AddListener(delegate { StopAutoSpin(); gambleController.isAutoSpinOn = false; });
 
         //if (_buttonBetone) _buttonBetone.onClick.RemoveAllListeners();
         //if (_buttonBetone) _buttonBetone.onClick.AddListener(OnBetChange);
@@ -185,7 +186,7 @@ public class SlotBehaviour : MonoBehaviour
         if (TBetMinus_Button) TBetMinus_Button.onClick.AddListener(delegate { OnBetChange(false); });
 
         if (StopSpin_Button) StopSpin_Button.onClick.RemoveAllListeners();
-        if (StopSpin_Button) StopSpin_Button.onClick.AddListener(() => { StopSpinToggle = true; StopSpin_Button.gameObject.SetActive(false); });
+        if (StopSpin_Button) StopSpin_Button.onClick.AddListener(() => { StopSpinToggle = true; StopSpin_Button.gameObject.SetActive(false); SlotStart_Button.gameObject.SetActive(true); });
 
         if (Turbo_Button) Turbo_Button.onClick.RemoveAllListeners();
         if (Turbo_Button) Turbo_Button.onClick.AddListener(TurboToggle);
@@ -213,19 +214,31 @@ public class SlotBehaviour : MonoBehaviour
 
     void TurboToggle()
     {
+
         if (IsTurboOn)
         {
+
             IsTurboOn = false;
-            //Turbo_Button.GetComponent<ImageAnimation>().StopAnimation();
-            //Turbo_Button.image.sprite = TurboToggleSprites[0];
+
+            Turbo_Button.GetComponent<ImageAnimation>().StopAnimation();
+
+            Turbo_Button.image.sprite = TurboToggleSprites[0];
+
             Turbo_Button.image.color = new Color(0.86f, 0.86f, 0.86f, 1);
+
         }
+
         else
         {
+
             IsTurboOn = true;
-            //Turbo_Button.GetComponent<ImageAnimation>().StartAnimation();
+
+            Turbo_Button.GetComponent<ImageAnimation>().StartAnimation();
+
             Turbo_Button.image.color = new Color(1, 1, 1, 1);
+
         }
+
     }
 
     internal void shuffleInitialMatrix()
@@ -537,7 +550,6 @@ public class SlotBehaviour : MonoBehaviour
         tweenroutine = StartCoroutine(TweenRoutine());
     }
 
-
     private IEnumerator TweenRoutine()
     {
         gambleController.GambleTweeningAnim(false);
@@ -565,6 +577,7 @@ public class SlotBehaviour : MonoBehaviour
         if (!IsTurboOn && !IsFreeSpin && !IsAutoSpin)
         {
             StopSpin_Button.gameObject.SetActive(true);
+            SlotStart_Button.gameObject.SetActive(false);
         }
 
         for (int i = 0; i < numberOfSlots; i++)
@@ -633,6 +646,7 @@ public class SlotBehaviour : MonoBehaviour
                 }
             }
             StopSpin_Button.gameObject.SetActive(false);
+            SlotStart_Button.gameObject.SetActive(true);
         }
 
         for (int i = 0; i < numberOfSlots; i++)
@@ -700,7 +714,7 @@ public class SlotBehaviour : MonoBehaviour
         else
         {
             ActivateGamble();
-            yield return new WaitForSeconds(2f);
+            //yield return new WaitForSeconds(2f);
             IsSpinning = false;
         }
 
@@ -869,6 +883,7 @@ public class SlotBehaviour : MonoBehaviour
     {
         alltweens[index].Pause();
         int tweenpos = (reqpos * (IconSizeFactor + SpacingFactor)) - (IconSizeFactor + (2 * SpacingFactor));
+        slotTransform.localPosition = new Vector2(slotTransform.localPosition.x, 0);
         alltweens[index] = slotTransform.DOLocalMoveY(-tweenpos + 100 + (SpacingFactor > 0 ? SpacingFactor / 4 : 0), 0.5f).SetEase(Ease.OutElastic);
         //yield return new WaitForSeconds(0.2f);
         if (!isStop)
