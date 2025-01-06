@@ -95,13 +95,15 @@ public class GambleController : MonoBehaviour
     {
         if (GambleEnd_Object) GambleEnd_Object.SetActive(false); // Hide end screen
         GambleTweeningAnim(false); // Stop animation
+
+        isAutoSpinOn = slotController.IsAutoSpin;
+
         slotController.DeactivateGamble(); // Deactivate the gamble slot
         winamount.text = "0"; // Reset win amount text
 
         if (!isRepeat)
         {
             winamount.text = "0"; // Reset win amount on non-repeat
-            isAutoSpinOn = true;
         }
 
         if (audioController) audioController.PlayButtonAudio(); // Play button click audio

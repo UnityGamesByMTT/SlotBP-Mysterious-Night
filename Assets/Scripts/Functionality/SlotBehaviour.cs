@@ -138,7 +138,7 @@ public class SlotBehaviour : MonoBehaviour
     private bool StopSpinToggle;
     private float SpinDelay = 0.2f;
     private bool IsTurboOn;
-    private bool WasAutoSpinOn;
+    internal bool WasAutoSpinOn;
     internal bool IsAutoSpin = false;
     private bool IsSpinning = false;
     internal bool CheckPopups = false;
