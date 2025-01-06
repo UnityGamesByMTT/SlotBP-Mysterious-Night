@@ -15,7 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SlotBehaviour slotManager;
     [SerializeField] private SocketIOManager socketIOManager;
 
-
+    [SerializeField]
+    private Button SkipWinAnimation;
 
 
     [Header("Popus UI")]
@@ -86,19 +87,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button m_AwakeGameButton;
 
     private bool isOpen;
-
+    private Tween WinPopupTextTween;
+    private Tween ClosePopupTween;
+    internal int FreeSpins;
     private bool isExit = false;
-
-    //private void Awake()
-    //{
-    //    if (SplashScreen) SplashScreen.SetActive(true);
-    //    StartCoroutine(LoadingRoutine());
-    //}
-
-    private void Awake()
-    {
-        SimulateClickByDefault();
-    }
 
     private void Start()
     {
@@ -142,15 +134,8 @@ public class UIManager : MonoBehaviour
         if (CloseAD_Button) CloseAD_Button.onClick.RemoveAllListeners();
         if (CloseAD_Button) CloseAD_Button.onClick.AddListener(CallOnExitFunction);
 
-    }
-
-    //HACK: Something To Do Here
-    private void SimulateClickByDefault()
-    {
-
-        Debug.Log("Awaken The Game...");
-        m_AwakeGameButton.onClick.AddListener(() => { Debug.Log("Called The Game..."); });
-        m_AwakeGameButton.onClick.Invoke();
+        if (SkipWinAnimation) SkipWinAnimation.onClick.RemoveAllListeners();
+        if (SkipWinAnimation) SkipWinAnimation.onClick.AddListener(SkipWin);
     }
 
     private void ToggleMusic()
@@ -171,25 +156,22 @@ public class UIManager : MonoBehaviour
 
     }
 
-    IEnumerator LoadingRoutine()
+    void SkipWin()
     {
-
-        for (int i = 0; i < progressbar.childCount; i++)
+        Debug.Log("Skip win called");
+        if (ClosePopupTween != null)
         {
-            progressbar.GetChild(i).gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.15f);
-
-            if (i > 0)
-                loading_text.text = (((float)i / (float)(progressbar.childCount - 1)) * 100).ToString("f0") + "%";
-
-            if (i == 14)
-                yield return new WaitUntil(() => !socketIOManager.isLoading);
-
+            ClosePopupTween.Kill();
+            ClosePopupTween = null;
         }
-        if (SplashScreen) SplashScreen.SetActive(false);
-
+        if (WinPopupTextTween != null)
+        {
+            WinPopupTextTween.Kill();
+            WinPopupTextTween = null;
+        }
+        ClosePopup(WinPopup_Object);
+        slotManager.CheckPopups = false;
     }
-
 
     internal void LowBalPopup()
     {
@@ -251,16 +233,16 @@ public class UIManager : MonoBehaviour
 
     private void StartPopupAnim(double amount)
     {
-        int initAmount = 0;
+        double initAmount = 0;
         if (WinPopup_Object) WinPopup_Object.SetActive(true);
         if (MainPopup_Object) MainPopup_Object.SetActive(true);
 
-        DOTween.To(() => initAmount, (val) => initAmount = val, (int)amount, 5f).OnUpdate(() =>
+        WinPopupTextTween = DOTween.To(() => initAmount, (val) => initAmount = val, (int)amount, 5f).OnUpdate(() =>
         {
-            if (Win_Text) Win_Text.text = initAmount.ToString();
+            if (Win_Text) Win_Text.text = initAmount.ToString("F3");
         });
 
-        DOVirtual.DelayedCall(6f, () =>
+        ClosePopupTween = DOVirtual.DelayedCall(6f, () =>
         {
             ClosePopup(WinPopup_Object);
             Win_Text.text="";
@@ -330,15 +312,15 @@ public class UIManager : MonoBehaviour
             string text = null;
             if (paylines.symbols[i].Multiplier[0][0] != 0)
             {
-                text += paylines.symbols[i].Multiplier[0][0];
+                text += paylines.symbols[i].Multiplier[0][0] + "x";
             }
             if (paylines.symbols[i].Multiplier[1][0] != 0)
             {
-                text += "\n " + paylines.symbols[i].Multiplier[1][0];
+                text += "\n " + paylines.symbols[i].Multiplier[1][0] + "x";
             }
             if (paylines.symbols[i].Multiplier[2][0] != 0)
             {
-                text += "\n" + paylines.symbols[i].Multiplier[2][0];
+                text += "\n" + paylines.symbols[i].Multiplier[2][0] + "x";
             }
             if (SymbolsText[i]) SymbolsText[i].text = text;
         }

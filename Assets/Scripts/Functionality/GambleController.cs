@@ -46,6 +46,8 @@ public class GambleController : MonoBehaviour
     private Tweener Gamble_Tween_Scale = null; // Tweener for scaling the double button
     internal double gambleAmount;
 
+    [SerializeField] internal bool isAutoSpinOn;
+
     #region Initialization
 
     private void Start()
@@ -93,10 +95,16 @@ public class GambleController : MonoBehaviour
     {
         if (GambleEnd_Object) GambleEnd_Object.SetActive(false); // Hide end screen
         GambleTweeningAnim(false); // Stop animation
+
+        isAutoSpinOn = slotController.IsAutoSpin;
+
         slotController.DeactivateGamble(); // Deactivate the gamble slot
         winamount.text = "0"; // Reset win amount text
 
-        if (!isRepeat) winamount.text = "0"; // Reset win amount on non-repeat
+        if (!isRepeat)
+        {
+            winamount.text = "0"; // Reset win amount on non-repeat
+        }
 
         if (audioController) audioController.PlayButtonAudio(); // Play button click audio
         if (gamble_game) gamble_game.SetActive(true); // Activate gamble game object
@@ -110,6 +118,11 @@ public class GambleController : MonoBehaviour
     private void OnReset()
     {
         if (slotController) slotController.GambleCollect(); // Collect winnings
+        if (isAutoSpinOn)
+        {
+            isAutoSpinOn = false;
+            slotController.AutoSpin();
+        }
         NormalCollectFunction(); // Reset the gamble game
     }
 
@@ -272,6 +285,11 @@ public class GambleController : MonoBehaviour
         DealerCard_Script.Card_Button.image.sprite = cardCover;
         DealerCard_Script.once = false;
         toggleDoubleButton(false);
+
+        if (isAutoSpinOn)
+        {
+            slotController.AutoSpin();
+        }
     }
 
     #endregion
