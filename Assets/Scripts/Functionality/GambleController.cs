@@ -56,21 +56,34 @@ public class GambleController : MonoBehaviour
         if (doubleButton)
         {
             doubleButton.onClick.RemoveAllListeners();
-            doubleButton.onClick.AddListener(delegate { StartGamblegame(false); });
+            doubleButton.onClick.AddListener(delegate
+            {
+                audioController.PlayButtonAudio();
+                StartGamblegame(false);
+            });
         }
 
         // Collect Button Setup
         if (m_Collect_Button)
         {
             m_Collect_Button.onClick.RemoveAllListeners();
-            m_Collect_Button.onClick.AddListener(OnReset);
+            m_Collect_Button.onClick.AddListener(() =>
+            {
+                audioController.PlayButtonAudio();
+                OnReset();
+            });
         }
 
         // Double Button Setup
         if (m_Double_Button)
         {
             m_Double_Button.onClick.RemoveAllListeners();
-            m_Double_Button.onClick.AddListener(delegate { NormalCollectFunction(); StartGamblegame(true); });
+            m_Double_Button.onClick.AddListener(delegate
+            {
+                audioController.PlayButtonAudio();
+                NormalCollectFunction();
+                StartGamblegame(true);
+            });
         }
 
         toggleDoubleButton(false); // Disable double button at start
@@ -96,7 +109,10 @@ public class GambleController : MonoBehaviour
         if (GambleEnd_Object) GambleEnd_Object.SetActive(false); // Hide end screen
         GambleTweeningAnim(false); // Stop animation
 
-        isAutoSpinOn = slotController.IsAutoSpin;
+        if (!isAutoSpinOn)
+        {
+            isAutoSpinOn = slotController.IsAutoSpin;
+        }
 
         slotController.DeactivateGamble(); // Deactivate the gamble slot
         winamount.text = "0"; // Reset win amount text
