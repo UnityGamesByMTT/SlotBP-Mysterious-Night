@@ -3736,7 +3736,7 @@ GameObject:
   - component: {fileID: 300216543}
   - component: {fileID: 300216542}
   m_Layer: 5
-  m_Name: Double_Img
+  m_Name: GambleButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3769,7 +3769,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300216540}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -6552,7 +6552,7 @@ MonoBehaviour:
   uIManager: {fileID: 377874625}
   bonusdata: []
   _jsManager: {fileID: 500036493}
-  testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDgzZDdkYTI3YmY5MDI0NDNlYjRkZSIsInVzZXJuYW1lIjoiZGFyc2hhbiIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3MzYxMzk1NzIsImV4cCI6MTczNjc0NDM3Mn0.T1BT13TBh4k8pkeUFjagY0GvXwk00J49U029DKlNfO4
+  testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZDgzZDdkYTI3YmY5MDI0NDNlYjRkZSIsInVzZXJuYW1lIjoiZGFyc2hhbiIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3MzYyMjc2MDgsImV4cCI6MTczNjgzMjQwOH0.4YJX3ZB0mMikbnJmOw3HV21L994XI1fy_7htraeE1-k
 --- !u!114 &500036493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21136,7 +21136,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Double
+  m_text: Gamble
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 82ff492c12dbb436a947e81f33d8da97, type: 2}
   m_sharedMaterial: {fileID: -4559087540124535197, guid: 82ff492c12dbb436a947e81f33d8da97, type: 2}
@@ -25994,7 +25994,7 @@ GameObject:
   - component: {fileID: 1904672563}
   - component: {fileID: 1904672562}
   m_Layer: 5
-  m_Name: Double_Button
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26014,10 +26014,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 300216541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1.6}
-  m_SizeDelta: {x: 180, y: 46}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1904672562
 MonoBehaviour:
@@ -26048,10 +26048,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 797e82b8adf414932b0e20ab7e1deb4f, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: d7425fef17525428c85c13cc8c564e8f, type: 3}
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 854369741, guid: 8118df47bb2bf4fb88103eca128f94bd, type: 3}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 21300000, guid: 797e82b8adf414932b0e20ab7e1deb4f, type: 3}
+    m_DisabledSprite: {fileID: 854369741, guid: 8118df47bb2bf4fb88103eca128f94bd, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -26083,7 +26083,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d7425fef17525428c85c13cc8c564e8f, type: 3}
+  m_Sprite: {fileID: -1465563037, guid: 8118df47bb2bf4fb88103eca128f94bd, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -27159,7 +27159,7 @@ GameObject:
   - component: {fileID: 2016666138}
   - component: {fileID: 2016666137}
   m_Layer: 5
-  m_Name: Double
+  m_Name: Gamble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
