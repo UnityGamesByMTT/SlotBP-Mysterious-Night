@@ -174,7 +174,12 @@ public class SlotBehaviour : MonoBehaviour
         if (AutoSpin_Button) AutoSpin_Button.onClick.AddListener(AutoSpin);
 
         if (AutoSpinStop_Button) AutoSpinStop_Button.onClick.RemoveAllListeners();
-        if (AutoSpinStop_Button) AutoSpinStop_Button.onClick.AddListener(delegate { StopAutoSpin(); gambleController.isAutoSpinOn = false; });
+        if (AutoSpinStop_Button) AutoSpinStop_Button.onClick.AddListener(delegate
+        {
+            audioController.PlayButtonAudio();
+            StopAutoSpin();
+            gambleController.isAutoSpinOn = false;
+        });
 
         //if (_buttonBetone) _buttonBetone.onClick.RemoveAllListeners();
         //if (_buttonBetone) _buttonBetone.onClick.AddListener(OnBetChange);
@@ -186,10 +191,20 @@ public class SlotBehaviour : MonoBehaviour
         if (TBetMinus_Button) TBetMinus_Button.onClick.AddListener(delegate { OnBetChange(false); });
 
         if (StopSpin_Button) StopSpin_Button.onClick.RemoveAllListeners();
-        if (StopSpin_Button) StopSpin_Button.onClick.AddListener(() => { StopSpinToggle = true; StopSpin_Button.gameObject.SetActive(false); SlotStart_Button.gameObject.SetActive(true); });
+        if (StopSpin_Button) StopSpin_Button.onClick.AddListener(() =>
+        {
+            audioController.PlayButtonAudio();
+            StopSpinToggle = true;
+            StopSpin_Button.gameObject.SetActive(false);
+            SlotStart_Button.gameObject.SetActive(true);
+        });
 
         if (Turbo_Button) Turbo_Button.onClick.RemoveAllListeners();
-        if (Turbo_Button) Turbo_Button.onClick.AddListener(TurboToggle);
+        if (Turbo_Button) Turbo_Button.onClick.AddListener(delegate
+        {
+            audioController.PlayButtonAudio();
+            TurboToggle();
+        });
 
         tweenHeight = (8 * IconSizeFactor) - 280;
     }
