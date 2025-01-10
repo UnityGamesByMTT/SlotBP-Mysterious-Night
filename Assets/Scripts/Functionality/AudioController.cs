@@ -19,6 +19,8 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioClip NormalBg_Audio;
     [SerializeField] private AudioClip BonusBg_Audio;
 
+    [SerializeField] private AudioListener TheListener;
+
     private void Start()
     {
         playBgAudio();
@@ -62,26 +64,28 @@ public class AudioController : MonoBehaviour
         if (!focus)
         {
 
-            bg_adudio.Pause();
-            audioPlayer_wl.Pause();
-            audioPlayer_button.Pause();
-            audioPlayer_Spin.Pause();
+            //bg_adudio.Pause();
+            //audioPlayer_wl.Pause();
+            //audioPlayer_button.Pause();
+            //audioPlayer_Spin.Pause();
+
+            TheListener.enabled = false;
         }
         else
         {
-            if (!bg_adudio.mute) bg_adudio.UnPause();
-            if (IsSpinning)
-            {
-                if (!audioPlayer_wl.mute) audioPlayer_wl.UnPause();
-                if (audioPlayer_Spin) audioPlayer_Spin.UnPause();
-            }
-            else
-            {
-                StopWLAaudio();
-                if (audioPlayer_Spin) audioPlayer_Spin.Stop();
-            }
-            if (!audioPlayer_button.mute) audioPlayer_button.UnPause();
-
+            //if (!bg_adudio.mute) bg_adudio.UnPause();
+            //if (IsSpinning)
+            //{
+            //    if (!audioPlayer_wl.mute) audioPlayer_wl.UnPause();
+            //    if (audioPlayer_Spin) audioPlayer_Spin.UnPause();
+            //}
+            //else
+            //{
+            //    StopWLAaudio();
+            //    if (audioPlayer_Spin) audioPlayer_Spin.Stop();
+            //}
+            //if (!audioPlayer_button.mute) audioPlayer_button.UnPause();
+            TheListener.enabled = true;
         }
     }
 
@@ -103,7 +107,7 @@ public class AudioController : MonoBehaviour
             }
 
 
-            audioPlayer_Spin.Play();
+            if(audioPlayer_Spin) audioPlayer_Spin.Play();
         }
 
     }
