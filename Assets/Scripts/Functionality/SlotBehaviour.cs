@@ -371,8 +371,7 @@ public class SlotBehaviour : MonoBehaviour
         if (BetperLine_text) BetperLine_text.text = SocketManager.initialData.Bets[BetCounter].ToString();
         if (TotalBet_text) TotalBet_text.text = (SocketManager.initialData.Bets[BetCounter] * SocketManager.initialData.Lines.Count).ToString();
         currentTotalBet = SocketManager.initialData.Bets[BetCounter] * SocketManager.initialData.Lines.Count;
-        if (currentBalance < currentTotalBet)
-            CompareBalance();
+       
 
     }
 
@@ -406,7 +405,7 @@ public class SlotBehaviour : MonoBehaviour
         if (BetperLine_text) BetperLine_text.text = SocketManager.initialData.Bets[BetCounter].ToString();
         if (TotalBet_text) TotalBet_text.text = (SocketManager.initialData.Bets[BetCounter] * SocketManager.initialData.Lines.Count).ToString();
         currentTotalBet = SocketManager.initialData.Bets[BetCounter] * SocketManager.initialData.Lines.Count;
-        CompareBalance();
+        
     }
 
     private void ToggleLine(bool inc)
