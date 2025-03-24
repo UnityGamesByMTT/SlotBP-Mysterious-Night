@@ -105,7 +105,7 @@ public class UIManager : MonoBehaviour
         if (LBExit_Button) LBExit_Button.onClick.AddListener(delegate { ClosePopup(LBPopup_Object); });
 
         if (disconnection_close) disconnection_close.onClick.RemoveAllListeners();
-        if (disconnection_close) disconnection_close.onClick.AddListener(CallOnExitFunction);
+        if (disconnection_close) disconnection_close.onClick.AddListener(delegate { CallOnExitFunction(); socketIOManager.ReactNativeCallOnFailedToConnect(); }); //BackendChanges
 
         if (GameExit_Button) GameExit_Button.onClick.RemoveAllListeners();
         if (GameExit_Button) GameExit_Button.onClick.AddListener(delegate { OpenPopup(QuitPopup_Object); });
