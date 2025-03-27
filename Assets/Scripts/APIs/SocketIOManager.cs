@@ -316,9 +316,9 @@ public class SocketIOManager : MonoBehaviour
     {
         // Construct message data
 
-        if (this.manager.Socket != null && this.manager.Socket.IsOpen)
+        if (gameSocket != null && gameSocket.IsOpen)
         {
-            this.manager.Socket.Emit(eventName);
+            gameSocket.Emit(eventName);
             //Debug.Log("JSON data sent: " + json);
         }
         else
